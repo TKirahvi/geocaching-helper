@@ -1,6 +1,16 @@
+$a: 100%;
+$b: 20px;
+
+
 #map {
-  position:absolute;
-  top:64px;
-  bottom:0;
-  width:100%;
+  position: absolute;
+  top: 0;
+  margin: 10px 10px 50px 10px;
+  bottom: 0;
+  //width: 100% - 20px;
+  width: -webkit-calc(#{$a} - #{$b});
+  width:    -moz-calc(#{$a} - #{$b});
+  width:         calc(#{$a} - #{$b});
+
 }
+

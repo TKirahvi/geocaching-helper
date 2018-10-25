@@ -7,7 +7,11 @@
     "type": "git",
     "url": "git+https://github.com/haoliangyu/ngx-leaflet-starter.git"
   },
-  "keywords": ["angular", "leaflet", "starter"],
+  "keywords": [
+    "angular",
+    "leaflet",
+    "starter"
+  ],
   "author": "Haoliang Yu <haholiang.yu@outlook.com>",
   "license": "MIT",
   "bugs": {
@@ -23,7 +27,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{d.ts,ts,json,md}": ["prettier --write", "git add"]
+    "*.{d.ts,ts,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "homepage": "https://github.com/haoliangyu/ngx-leaflet-starter#readme",
   "dependencies": {

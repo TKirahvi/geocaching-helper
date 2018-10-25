@@ -10,9 +10,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { AppComponent } from "./app.component";
-import { NavigatorComponent } from "./navigator/navigator.component";
 import { MapComponent } from "./map/map.component";
-import { ToolbarComponent } from "./toolbar/toolbar.component";
+import { NavigatorComponent } from "./navigator/navigator.component";
 
 import { MapService } from "./map.service";
 import { GeocodingService } from "./geocoding.service";
@@ -24,8 +23,7 @@ import "leaflet.vectorgrid";
   declarations: [
     NavigatorComponent,
     MapComponent,
-    AppComponent,
-    ToolbarComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

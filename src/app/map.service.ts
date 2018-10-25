@@ -55,9 +55,9 @@ export class MapService {
     L.DomEvent.disableScrollPropagation(element);
   }
 
-  toggleAirPortLayer(on: boolean) {
-    if (on) {
-      this.http.get("assets/airports.min.geojson").subscribe(result => {
+  toggleMunincipalityLayer(on: boolean) {
+    if ( on ) {
+        this.http.get("assets/kuntarajat.geojson").subscribe(result => {
         this.vtLayer = L.vectorGrid.slicer(result, {
           zIndex: 1000
         });
@@ -69,37 +69,8 @@ export class MapService {
     }
   }
 
-  toggleMarkerEditing(on: boolean) {
-    if (on) {
-      this.map.on("click", this.addMarker.bind(this));
-    } else {
-      this.map.off("click");
-    }
-  }
-
   fitBounds(bounds: L.LatLngBounds) {
     this.map.fitBounds(bounds, {});
   }
 
-  private addMarker(e: L.LeafletMouseEvent) {
-    const shortLat = Math.round(e.latlng.lat * 1000000) / 1000000;
-    const shortLng = Math.round(e.latlng.lng * 1000000) / 1000000;
-    const popup = `<div>Latitude: ${shortLat}<div><div>Longitude: ${shortLng}<div>`;
-    const icon = L.icon({
-      iconUrl: "assets/marker-icon.png",
-      shadowUrl: "assets/marker-shadow.png"
-    });
-
-    const marker = L.marker(e.latlng, {
-      draggable: true,
-      icon
-    })
-      .bindPopup(popup, {
-        offset: L.point(12, 6)
-      })
-      .addTo(this.map)
-      .openPopup();
-
-    marker.on("click", () => marker.remove());
-  }
 }
