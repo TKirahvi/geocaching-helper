@@ -1,8 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Location } from "./location";
 import { Observable, BehaviorSubject } from "rxjs/Rx";
-import { GeocodingService } from "./geocoding.service";
 import * as L from "leaflet";
 
 @Injectable()
@@ -23,8 +21,7 @@ export class MapService {
       shadowUrl: "assets/marker-shadow.png"
     });
 
-  constructor(private http: HttpClient,
-    private geocoder: GeocodingService) {
+  constructor(private http: HttpClient) {
     const osmAttr =
       "&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>, " +
       "Tiles courtesy of <a href='http://hot.openstreetmap.org/' target='_blank'>Humanitarian OpenStreetMap Team</a>";
