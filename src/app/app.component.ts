@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { MapService } from "./map.service";
 
 @Component({
   selector: "app-root",
@@ -6,5 +7,14 @@ import { Component } from "@angular/core";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = "app";
+   
+   loadingIndicator: boolean; 
+
+  constructor(
+    private mapService: MapService) {
+      this.loadingIndicator = false;
+      this.mapService.loading.subscribe((loading) => {
+          this.loadingIndicator = loading;
+      });
+    }
 }

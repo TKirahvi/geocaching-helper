@@ -1,0 +1,9 @@
+<div id="current-munincipality-container">
+  <div id="title">Current munincipality: </div>
+  <div id="current-munincipality" [innerHTML]="currentMunincipality"></div>
+  <button mat-icon-button
+          mapTooltip="Update location and munincipality"
+          (click)="refreshLocation()">
+    <mat-icon>my_location</mat-icon>
+  </button>
+</div>

@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { MapService } from "../map.service";
-import { GeocodingService } from "../geocoding.service";
 import { Location } from "../location";
-import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-navigator",
@@ -13,11 +11,9 @@ export class NavigatorComponent implements OnInit {
   munincipalityOn: boolean;
 
   constructor(
-    private mapService: MapService,
-    private geocoder: GeocodingService,
-    private snackBar: MatSnackBar
+    private mapService: MapService
   ) {
-    this.munincipalityOn = false;
+    this.munincipalityOn = true;
   }
 
   ngOnInit() {

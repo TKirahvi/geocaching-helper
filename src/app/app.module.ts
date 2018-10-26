@@ -14,16 +14,17 @@ import { MapComponent } from "./map/map.component";
 import { NavigatorComponent } from "./navigator/navigator.component";
 
 import { MapService } from "./map.service";
-import { GeocodingService } from "./geocoding.service";
 
 import "leaflet";
 import "leaflet.vectorgrid";
+import { CurrentMunincipalityComponent } from './current-munincipality/current-munincipality.component';
 
 @NgModule({
   declarations: [
-    NavigatorComponent,
     MapComponent,
-    AppComponent
+    NavigatorComponent,
+    AppComponent,
+    CurrentMunincipalityComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,7 @@ import "leaflet.vectorgrid";
     MatTooltipModule,
     MatSnackBarModule
   ],
-  providers: [MapService, GeocodingService],
+  providers: [MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

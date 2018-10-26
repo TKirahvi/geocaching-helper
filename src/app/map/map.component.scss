@@ -4,8 +4,8 @@ $b: 20px;
 
 #map {
   position: absolute;
-  top: 0;
-  margin: 10px 10px 50px 10px;
+  top: 50px;
+  margin: 10px 10px 10px 10px;
   bottom: 0;
   //width: 100% - 20px;
   width: -webkit-calc(#{$a} - #{$b});
