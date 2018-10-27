@@ -17,6 +17,8 @@ import { MapService } from "./map.service";
 
 import "leaflet";
 import "leaflet.vectorgrid";
+import "d3-geo";
+
 import { CurrentMunincipalityComponent } from './current-munincipality/current-munincipality.component';
 
 @NgModule({

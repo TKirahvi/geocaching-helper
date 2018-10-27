@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { MapService } from "../map.service";
-import { Location } from "../location";
 
 @Component({
   selector: "app-navigator",

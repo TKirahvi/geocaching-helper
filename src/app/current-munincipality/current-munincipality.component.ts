@@ -11,7 +11,7 @@ export class CurrentMunincipalityComponent implements OnInit {
 
   currentMunincipality: string;
   constructor(private mapService: MapService) { 
-    this.currentMunincipality = "Not found";
+    this.currentMunincipality = "Ei löytynyt";
 
     mapService.location.subscribe(location => {
       if ( location != undefined ) {

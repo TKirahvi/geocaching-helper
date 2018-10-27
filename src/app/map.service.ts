@@ -2,6 +2,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs/Rx";
 import * as L from "leaflet";
+import * as d3 from 'd3-geo';
 
 @Injectable()
 export class MapService {
@@ -109,9 +110,9 @@ export class MapService {
   }
 
   findMunincipality(latLng: L.LatLng): Promise<string> {
-    let munincipality = "Not found";
+    let munincipality = "Ei löytynyt";
 
-    let promise = new Promise((resolve, reject) => {
+    let promise: Promise<string> = new Promise((resolve, reject) => {
 
       this.http.get("assets/kuntarajat.geojson")
         .toPromise()
@@ -120,9 +121,9 @@ export class MapService {
           let munincipalityGeoJSON: any = result;
           munincipalityGeoJSON.features.map(feature => {
             // What if polygon contains several coorinates, can munincipality be
-            // several polygons?
+            // several polygons? <- I guess so
             if ( feature.geometry.coordinates && 
-                  this.isInsidePolygon(latLng, feature.geometry.coordinates[0])) {
+                  d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])) {
               munincipality = feature.properties.name;
             }
           });
@@ -132,26 +133,6 @@ export class MapService {
     });
 
     return promise;
-  }
-
-// Does this work at all?
-  isInsidePolygon(latLng: L.LatLng, polygon): boolean {
-    // ray-casting algorithm based on
-    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-    
-    var x = latLng.lat, y = latLng.lng;
-    
-    var inside = false;
-    for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-        var xi = polygon[i][0], yi = polygon[i][1];
-        var xj = polygon[j][0], yj = polygon[j][1];
-        
-        var intersect = ((yi > y) != (yj > y))
-            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-        if (intersect) inside = !inside;
-    }
-    
-    return inside;  
   }
 }
 
