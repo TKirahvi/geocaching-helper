@@ -4,20 +4,18 @@ import * as L from "leaflet";
 import { MapService } from "../map.service";
 
 import "rxjs/add/operator/catch";
+import { AfterViewInit } from "@angular/core";
 
 @Component({
   selector: "map",
   templateUrl: "./map.component.html",
   styleUrls: ["./map.component.scss"]
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit {
+  constructor(private mapService: MapService) {}
 
-  constructor(
-    private mapService: MapService
-  ) {
-  }
-
-  ngOnInit() {
+  ngAfterViewInit() {
+    console.log("Initializing map.component");
     const map = L.map("map", {
       zoomControl: false,
       attributionControl: false,

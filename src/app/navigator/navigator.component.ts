@@ -7,19 +7,23 @@ import { MapService } from "../map.service";
   styleUrls: ["./navigator.component.scss"]
 })
 export class NavigatorComponent implements OnInit {
-  munincipalityOn: boolean;
+  private munincipalityOn: boolean;
 
-  constructor(
-    private mapService: MapService
-  ) {
+  constructor(private mapService: MapService) {
     this.munincipalityOn = true;
+    this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
   }
 
   ngOnInit() {
     this.mapService.disableMouseEvent("map-navigator");
   }
+
   toggleMunicipalityLayer(on: boolean) {
     this.munincipalityOn = on;
     this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
+  }
+
+  refreshLocation() {
+    this.mapService.refreshLocation();
   }
 }

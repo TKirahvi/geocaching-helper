@@ -2,7 +2,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs/Rx";
 import * as L from "leaflet";
-import * as d3 from 'd3-geo';
+import * as d3 from "d3-geo";
 
 @Injectable()
 export class MapService {
@@ -16,11 +16,15 @@ export class MapService {
   private _loading = new BehaviorSubject<boolean>(false);
   public loading: Observable<boolean> = this._loading.asObservable();
 
-  
+  private marker: L.Marker;
+
+  private allMunincipalities = "assets/kuntarajat.geojson";
+  private strippedMunincipalities = "assets/kuntarajat-ok.geojson";
+
   private DefaultIcon = L.icon({
-      iconUrl: "assets/marker-icon.png",
-      shadowUrl: "assets/marker-shadow.png"
-    });
+    iconUrl: "assets/marker-icon.png",
+    shadowUrl: "assets/marker-shadow.png"
+  });
 
   constructor(private http: HttpClient) {
     const osmAttr =
@@ -63,7 +67,6 @@ export class MapService {
     L.Marker.prototype.options.icon = this.DefaultIcon;
   }
 
-
   disableMouseEvent(elementId: string) {
     const element = <HTMLElement>document.getElementById(elementId);
 
@@ -72,16 +75,15 @@ export class MapService {
   }
 
   toggleMunincipalityLayer(on: boolean) {
-    if ( on ) {
-        this.http.get("assets/kuntarajat.geojson").subscribe(result => {
-          this._loading.next(true);
-          this.vtLayer = L.vectorGrid.slicer(result, {
-           zIndex: 1000
-         });
-         this.vtLayer.addTo(this.map);
+    if (on) {
+      this.http.get(this.strippedMunincipalities).subscribe(result => {
+        this._loading.next(true);
+        this.vtLayer = L.vectorGrid.slicer(result, {
+          zIndex: 1000
+        });
+        this.vtLayer.addTo(this.map);
         this._loading.next(false);
       });
-
     } else if (this.vtLayer) {
       this.map.removeLayer(this.vtLayer);
       delete this.vtLayer;
@@ -89,52 +91,79 @@ export class MapService {
   }
 
   setLocation(location: L.LatLng) {
-    this.map.panTo(location);
-    this.map.setZoom(15);
+    //this.map.panTo(location);
+    //this.map.setZoom(15);
 
-    var marker = L.marker(location);
-    this.map.addLayer(marker);
+    this.clearMarker();
+    this.addMarker(location);
+
     this._location.next(location);
   }
 
-  refreshLocation() {    
-        this.map.locate({setView: true, watch: true, maxZoom: 16}) /* This will return map so you can do chaining */
-        .on('locationfound', e => {
-          let location: any = e;
-            this.setLocation(location.latlng);
-        })
-       .on('locationerror', function(e){
-            console.log(e);
-            alert("Location access denied.");
-        });
+  addMarker(location: L.LatLng) {
+    this.marker = L.marker(location);
+    this.map.addLayer(this.marker);
+  }
+
+  clearMarker() {
+    if (this.map && this.marker) {
+      this.map.removeLayer(this.marker);
+    }
+  }
+
+  refreshLocation() {
+    console.log("refreshing location");
+    //   var foo = this;
+    //   navigator.geolocation.getCurrentPosition(
+    //     function(response){
+    //       console.log(response);
+    //       foo.setLocation(new L.LatLng(response.coords.latitude, response.coords.longitude));
+    //     },
+    //     function(error)   {
+    //       console.error(error)
+    //     },
+    //     {timeout: 1000*60, enableHighAccuracy: true, maximumAge: 1000*60*60}
+    // );
+
+    this.map
+      .locate({
+        setView: true,
+        watch: true,
+        maxZoom: 19
+      }) /* This will return map so you can do chaining */
+      .on("locationfound", e => {
+        let location: any = e;
+        this.setLocation(location.latlng);
+      })
+      .on("locationerror", function(e) {
+        console.log(e);
+        alert("Location access denied.");
+      });
   }
 
   findMunincipality(latLng: L.LatLng): Promise<string> {
     let munincipality = "Ei löytynyt";
 
     let promise: Promise<string> = new Promise((resolve, reject) => {
-
-      this.http.get("assets/kuntarajat.geojson")
+      this.http
+        .get(this.allMunincipalities)
         .toPromise()
         .then(result => {
           this._loading.next(true);
           let munincipalityGeoJSON: any = result;
           munincipalityGeoJSON.features.map(feature => {
-            // What if polygon contains several coorinates, can munincipality be
-            // several polygons? <- I guess so
-            if ( feature.geometry.coordinates && 
-                  d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])) {
+            if (
+              feature.geometry.coordinates &&
+              d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])
+            ) {
               munincipality = feature.properties.name;
             }
           });
           resolve(munincipality);
           this._loading.next(false);
-      });
+        });
     });
 
     return promise;
   }
 }
-
-
-

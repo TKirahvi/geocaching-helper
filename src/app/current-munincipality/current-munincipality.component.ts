@@ -1,32 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { MapService } from "../map.service";
-import { MapComponent }  from "../map/map.component";
+import { MapComponent } from "../map/map.component";
 
 @Component({
-  selector: 'current-munincipality',
-  templateUrl: './current-munincipality.component.html',
-  styleUrls: ['./current-munincipality.component.scss']
+  selector: "current-munincipality",
+  templateUrl: "./current-munincipality.component.html",
+  styleUrls: ["./current-munincipality.component.scss"]
 })
-export class CurrentMunincipalityComponent implements OnInit {
+export class CurrentMunincipalityComponent {
+  private currentMunincipality: string;
 
-  currentMunincipality: string;
-  constructor(private mapService: MapService) { 
+  constructor(private mapService: MapService) {
     this.currentMunincipality = "Ei löytynyt";
 
     mapService.location.subscribe(location => {
-      if ( location != undefined ) {
+      if (location != undefined) {
         mapService.findMunincipality(location).then(munincipality => {
-           this.currentMunincipality = munincipality
+          this.currentMunincipality = munincipality;
         });
       }
     });
   }
-
-  ngOnInit() {
-  }
-
-  refreshLocation() {
-    this.mapService.refreshLocation();
-  }
-
 }
