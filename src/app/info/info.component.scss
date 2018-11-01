@@ -1,0 +1,13 @@
+.info-modal {
+    z-index: 2000;
+    position: fixed;
+    top: 100px;
+    margin: 100px;
+    width: 400px;
+    padding: 20px;
+}
+
+.info-content {
+    background: white;
+    padding: 10px;
+}

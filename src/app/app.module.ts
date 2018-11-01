@@ -14,19 +14,23 @@ import { MapComponent } from "./map/map.component";
 import { NavigatorComponent } from "./navigator/navigator.component";
 
 import { MapService } from "./map.service";
+import { ModalService } from "./modal.service";
 
 import "leaflet";
 import "leaflet.vectorgrid";
 import "d3-geo";
 
-import { CurrentMunincipalityComponent } from './current-munincipality/current-munincipality.component';
+import { CurrentMunincipalityComponent } from "./current-munincipality/current-munincipality.component";
+import { InfoComponent } from "./info/info.component";
+import { ModalDialogModule } from "ngx-modal-dialog";
 
 @NgModule({
   declarations: [
     MapComponent,
     NavigatorComponent,
     AppComponent,
-    CurrentMunincipalityComponent
+    CurrentMunincipalityComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +41,11 @@ import { CurrentMunincipalityComponent } from './current-munincipality/current-m
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ModalDialogModule.forRoot()
   ],
-  providers: [MapService],
+  entryComponents: [InfoComponent],
+  providers: [MapService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

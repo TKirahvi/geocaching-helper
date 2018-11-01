@@ -1,11 +1,4 @@
-<div id="main" [ngClass]="{'loading': loadingIndicator}">
-	<div class="loading-wrapper" *ngIf="loadingIndicator">
-		<div class="loading-indicator">
-      		<div class="loader-wrap">
-        		<div class="loader"></div>
-      		</div>
-    	</div>
-  	</div>
+<div id="main" [ngClass]="{modalOpen: 'modal-open'}">
 	<current-munincipality></current-munincipality>
 	<map></map>
 </div>

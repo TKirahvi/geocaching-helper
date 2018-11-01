@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MapService } from "../map.service";
 import { MapComponent } from "../map/map.component";
+import { ModalService } from "../modal.service";
 
 @Component({
   selector: "current-munincipality",
@@ -10,7 +11,10 @@ import { MapComponent } from "../map/map.component";
 export class CurrentMunincipalityComponent {
   currentMunincipality: string;
 
-  constructor(private mapService: MapService) {
+  constructor(
+    private mapService: MapService,
+    private modalService: ModalService
+  ) {
     this.currentMunincipality = "Ei löytynyt";
 
     mapService.location.subscribe(location => {
@@ -20,5 +24,9 @@ export class CurrentMunincipalityComponent {
         });
       }
     });
+  }
+
+  showInfo() {
+    this.modalService.openInfo();
   }
 }
