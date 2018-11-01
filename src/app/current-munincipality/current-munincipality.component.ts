@@ -8,7 +8,7 @@ import { MapComponent } from "../map/map.component";
   styleUrls: ["./current-munincipality.component.scss"]
 })
 export class CurrentMunincipalityComponent {
-  private currentMunincipality: string;
+  currentMunincipality: string;
 
   constructor(private mapService: MapService) {
     this.currentMunincipality = "Ei löytynyt";

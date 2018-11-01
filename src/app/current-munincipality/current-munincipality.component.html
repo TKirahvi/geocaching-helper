@@ -1,4 +1,11 @@
 <div id="current-munincipality-container">
   <div id="title">Tämänhetkinen kunta: </div>
   <div id="current-munincipality" [innerHTML]="currentMunincipality"></div>
+  <div id="info-container">
+    <button mat-icon-button
+            disableRipple
+            matTooltip="Näytä info">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
 </div>

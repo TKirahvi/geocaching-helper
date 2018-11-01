@@ -91,9 +91,6 @@ export class MapService {
   }
 
   setLocation(location: L.LatLng) {
-    //this.map.panTo(location);
-    //this.map.setZoom(15);
-
     this.clearMarker();
     this.addMarker(location);
 
@@ -113,23 +110,10 @@ export class MapService {
 
   refreshLocation() {
     console.log("refreshing location");
-    //   var foo = this;
-    //   navigator.geolocation.getCurrentPosition(
-    //     function(response){
-    //       console.log(response);
-    //       foo.setLocation(new L.LatLng(response.coords.latitude, response.coords.longitude));
-    //     },
-    //     function(error)   {
-    //       console.error(error)
-    //     },
-    //     {timeout: 1000*60, enableHighAccuracy: true, maximumAge: 1000*60*60}
-    // );
-
     this.map
       .locate({
         setView: true,
-        watch: true,
-        maxZoom: 19
+        maxZoom: 17
       }) /* This will return map so you can do chaining */
       .on("locationfound", e => {
         let location: any = e;

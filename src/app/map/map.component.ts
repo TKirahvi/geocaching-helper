@@ -19,9 +19,9 @@ export class MapComponent implements AfterViewInit {
     const map = L.map("map", {
       zoomControl: false,
       attributionControl: false,
-      zoom: 12,
+      zoom: 10,
       minZoom: 4,
-      maxZoom: 19,
+      maxZoom: 17,
       layers: [this.mapService.baseMaps.OpenStreetMap]
     });
 
