@@ -2,7 +2,6 @@ import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs/Rx";
 import * as L from "leaflet";
-import { LayerService, LayerType, LayerSelection } from "./layer.service";
 
 @Injectable()
 export class MapService {

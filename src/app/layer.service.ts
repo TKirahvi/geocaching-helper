@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { MapService } from "./map.service";
@@ -7,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import * as L from "leaflet";
 import * as d3 from "d3-geo";
 import { WindowService } from "./window.service";
+import { Injectable } from "@angular/core";
 
 declare var latlngGraticule: any;
 
@@ -20,6 +20,9 @@ interface LayerMap {
 export class LayerService {
   private layers: LayerMap = {};
 
+  private munincipalities: any;
+  private graticule: any;
+
   private allMunincipalities = "assets/kuntarajat.geojson";
   private strippedMunincipalities = "assets/kuntarajat-ok.geojson";
 
@@ -29,7 +32,7 @@ export class LayerService {
     private windowService: WindowService
   ) {
     this.initLayers();
-    this.layers[LayerType.Munincipalities].addTo(this.mapService.map);
+    //this.layers[LayerType.Munincipalities].addTo(this.mapService.map);
   }
 
   setLayer(layer: LayerSelection): any {
@@ -40,7 +43,7 @@ export class LayerService {
   initLayers(): any {
     this.windowService.startLoading();
 
-    this.layers[LayerType.Graticules] = latlngGraticule({
+    this.graticule = latlngGraticule({
       showLabel: true,
       color: "red",
       weight: 0.8,
@@ -51,11 +54,14 @@ export class LayerService {
       ]
     });
 
-    this.http.get(this.allMunincipalities).subscribe(result => {
-      this.layers[LayerType.Munincipalities] = L.vectorGrid.slicer(result, {
-        zIndex: 1000
+    this.munincipalities = this.http
+      .get(this.allMunincipalities)
+      .subscribe(result => {
+        this.layers[LayerType.Munincipalities] = L.vectorGrid.slicer(result, {
+          zIndex: 1000
+        });
       });
-    });
+    this.graticule.addTo(this.mapService.map);
 
     this.windowService.endLoading();
   }
@@ -89,12 +95,12 @@ export class LayerService {
   }
 }
 
-export class LayerSelection {
-  constructor(public name: string, public type: LayerType) {}
-}
-
 export enum LayerType {
   Munincipalities,
   Graticules,
   Provinces
+}
+
+export class LayerSelection {
+  constructor(public name: string, public type: LayerType) {}
 }
