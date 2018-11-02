@@ -11,7 +11,7 @@ export class NavigatorComponent implements OnInit {
 
   constructor(private mapService: MapService) {
     this.munincipalityOn = true;
-    this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
+    //this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
   }
 
   ngOnInit() {
@@ -20,7 +20,7 @@ export class NavigatorComponent implements OnInit {
 
   toggleMunicipalityLayer(on: boolean) {
     this.munincipalityOn = on;
-    this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
+    //this.mapService.toggleMunincipalityLayer(this.munincipalityOn);
   }
 
   refreshLocation() {

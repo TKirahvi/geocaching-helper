@@ -1,0 +1,9 @@
+<div id="layer-selection">
+  <div *ngFor="let layer of availableLayers">
+    <input 
+        type="radio" 
+        [value]="layer.type" 
+        name="layers" 
+        (change)="onLayerChange(layer)"/>{{layer.name}}<br/>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { MapService } from "./map.service";
 import { ModalService } from "./modal.service";
+import { WindowService } from "./window.service";
 
 @Component({
   selector: "app-root",
@@ -13,12 +14,13 @@ export class AppComponent {
 
   constructor(
     private mapService: MapService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private windowService: WindowService
   ) {
     this.loadingIndicator = false;
     this.modalOpen = false;
 
-    this.mapService.loading.subscribe(loading => {
+    this.windowService.loading.subscribe(loading => {
       this.loadingIndicator = loading;
     });
 
