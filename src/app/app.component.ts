@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MapService } from "./map.service";
+import { ModalService } from "./modal.service";
 
 @Component({
   selector: "app-root",
@@ -7,14 +8,22 @@ import { MapService } from "./map.service";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-   
-   loadingIndicator: boolean; 
+  loadingIndicator: boolean;
+  modalOpen: boolean;
 
   constructor(
-    private mapService: MapService) {
-      this.loadingIndicator = false;
-      this.mapService.loading.subscribe((loading) => {
-          this.loadingIndicator = loading;
-      });
-    }
+    private mapService: MapService,
+    private modalService: ModalService
+  ) {
+    this.loadingIndicator = false;
+    this.modalOpen = false;
+
+    this.mapService.loading.subscribe(loading => {
+      this.loadingIndicator = loading;
+    });
+
+    this.modalService.infoOpen.subscribe(open => {
+      this.modalOpen = open;
+    });
+  }
 }

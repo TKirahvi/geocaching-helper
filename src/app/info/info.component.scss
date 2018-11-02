@@ -1,13 +1,118 @@
-.info-modal {
+
+@mixin infoComponent {
     z-index: 2000;
     position: fixed;
-    top: 100px;
-    margin: 100px;
-    width: 400px;
-    padding: 20px;
+    
+    left: 0;
+    left: 50%;
+
+    border: solid 1px black;
+    background: white;
+}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+    .info-component {
+        top: 40%;
+        width: 600px;
+        margin: -300px;
+        @include infoComponent();
+    }
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .info-component {
+        top: 40%;
+        width: 600px;
+        margin: -300px;
+        @include infoComponent();
+    }
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .info-component {
+        top: 35%;
+        width: 600px;
+        margin: -300px;
+        @include infoComponent();
+    }
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .info-component {
+        top: 35%;
+        width: 500px;
+        margin: -250px;
+        @include infoComponent();
+    }
+  }
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    .info-component {
+        top: 50%;
+        width: 350px;
+        margin: -175px;
+        @include infoComponent();
+    }
+  }
+  
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  
+  @media (min-width: 320px) and (max-width: 480px) {
+    
+    .info-component {
+        top: 25%;
+        width: 300px;
+        margin: -150px;
+        @include infoComponent();
+    }
+  }
+
+
+.info-button-top {
+    margin: 5px;
+    background: lightgray;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    float: right;
 }
 
 .info-content {
-    background: white;
     padding: 10px;
+}
+
+.info-button {
+    text-align: right;
+
+    button {
+        margin: 0 20px 20px 0;
+    }
 }

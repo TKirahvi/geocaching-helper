@@ -76,7 +76,7 @@ export class MapService {
 
   toggleMunincipalityLayer(on: boolean) {
     if (on) {
-      this.http.get(this.strippedMunincipalities).subscribe(result => {
+      this.http.get(this.allMunincipalities).subscribe(result => {
         this._loading.next(true);
         this.vtLayer = L.vectorGrid.slicer(result, {
           zIndex: 1000
@@ -84,6 +84,11 @@ export class MapService {
         this.vtLayer.addTo(this.map);
         this._loading.next(false);
       });
+      /*var latlngs: L.LatLngExpression = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+      var polygon = L.polygon(latlngs, {color: 'red'}).addTo(this.map);
+      polygon.on("mouseover", (foo) => {
+        console.log(foo);
+      });*/
     } else if (this.vtLayer) {
       this.map.removeLayer(this.vtLayer);
       delete this.vtLayer;
@@ -114,7 +119,7 @@ export class MapService {
       .locate({
         setView: true,
         maxZoom: 17
-      }) /* This will return map so you can do chaining */
+      })
       .on("locationfound", e => {
         let location: any = e;
         this.setLocation(location.latlng);
@@ -135,19 +140,37 @@ export class MapService {
         .then(result => {
           this._loading.next(true);
           let munincipalityGeoJSON: any = result;
-          munincipalityGeoJSON.features.map(feature => {
+
+          for (var i = 0; i < munincipalityGeoJSON.features.length; i++) {
+            var feature = munincipalityGeoJSON.features[i];
+            if (
+              feature.geometry.geometries &&
+              d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])
+            ) {
+              munincipality = feature.properties.name;
+              //break;
+            }
             if (
               feature.geometry.coordinates &&
               d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])
             ) {
               munincipality = feature.properties.name;
+              //break;
             }
-          });
+          }
           resolve(munincipality);
           this._loading.next(false);
         });
     });
 
     return promise;
+  }
+
+  collectAllCoordinates(geometries) {
+    var coordinates = [];
+    geometries.forEach(element => {
+      coordinates = coordinates.concat(element.coordinates);
+    });
+    return coordinates;
   }
 }

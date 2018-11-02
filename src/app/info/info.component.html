@@ -1,21 +1,28 @@
-<div id="info-component" [ngClass]="{infoOpen: 'info-modal'}">
+<div class="info-component" ><!--[ngClass]="{'info-modal': infoOpen}"-->
+
+  <div class="info-button-top">
+    <button (click)="closeInfo()">X</button>
+  </div>
+
   <div class="info-content">
     <p>
-      Tämän keskustelun innoittamana rupesin rakentelemaan tuollaista webbikikkaretta, joka näyttäisi käyttäjän sijainnin, nykyisen kunnan ja kuntarajat. <br/>
-      Löysin avointa dataa käyttävän sovelluksen (http://kuntakartta.org/dev.html), joka kertoo datan alkuperän.  <br/>
-      Käytän tässä tuota geokunnat-ok.json-tiedostoa, joten ihan kaikki täplät saaristomereltä ei ole merkattu, yrittäkää kestää.  <br/>
-      Mitään kattavaa testausta en ole tehnyt, varsinkaan tien päällä, enkä ole fyysisesti käynyt muissa kunnissa tätä kehitettäessä.  <br/>
-      Jos jotain ongelmia tulee, laittakaa meiliä: <a href="mailto:mikko.tanskanen@iki.fi">mikko.tanskanen@iki.fi</a> <br/>
-      Ilmeisesti Groundspeakin API on nykyään ihan avoin, kunhan käyttötarkoitus on järkevä, jos ehtisin joskus kokeilla sijoittaa myös kätköt tuohon samalle kartalle.  <br/>
-      Vaikka käyttäjän kyseisen kunnan kätköt tjsp. Myös kehitysajatuksia saa antaa.  <br/>
+      Löysin avointa dataa käyttävän sovelluksen (<a href="http://kuntakartta.org/dev.html">http://kuntakartta.org/dev.html</a>), joka kertoo datan alkuperän.  <br/>
+      Käytän tässä tuota kuntarajat-ok.json-tiedostoa, joten ihan kaikki täplät saaristomereltä ei ole merkattu, yrittäkää kestää.  <br/>
+    </p>
+    <p>
+      Mitään kattavaa testausta en ole tehnyt, varsinkaan tien päällä, enkä ole fyysisesti käynyt muissa kunnissa tätä kehitettäessä vaan pelkästään feikannut sijaintini selaimen Developer Toolsilla.  <br/>
+      Ilmeisesti Groundspeakin API on nykyään ihan avoin, kunhan käyttötarkoitus on järkevä, jos ehtisin joskus kokeilla sijoittaa myös kätköt tuohon samalle kartalle. Vaikka käyttäjän kyseisen kunnan kätköt tjsp. Myös kehitysajatuksia saa antaa.  <br/>
       Karttapohjana on Open Street Map, en nähnyt tarpeelliseksi sisällyttää muita vaikka tuolla koodissa onkin mahdollista vaihtaa Esriin tai CartoDB:hen.  <br/>
     </p>
     <p>
-      Sovellus kehitetty käyttämällä pohjana tuota: https://github.com/haoliangyu/ngx-leaflet-starter<br/>
-      Info-modaaliin: https://www.npmjs.com/package/ngx-modal-dialog
+      Sovellus kehitetty käyttämällä pohjana tuota: <a href="https://github.com/haoliangyu/ngx-leaflet-starter">https://github.com/haoliangyu/ngx-leaflet-starter</a><br/>
+      Jos jotain ongelmia tulee, laittakaa meiliä: <a href="mailto:mikko.tanskanen@iki.fi">mikko.tanskanen@iki.fi</a> <br/>
+    </p>
+    <p>
+        <a href="https://tkirahvi.kapsi.fi">tkirahvi.kapsi.fi</a>
     </p>
   </div>
   <div class="info-button">
-    <button (click)="closeInfo()"></button>
+    <button (click)="closeInfo()">Sulje</button>
   </div>
 </div>

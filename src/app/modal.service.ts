@@ -14,7 +14,7 @@ export class ModalService {
   }
 
   openInfo() {
-    console.log("open info");
     this._infoOpen.next(true);
+    console.log("open info");
   }
 }

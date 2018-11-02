@@ -1,4 +1,5 @@
-<div id="main" [ngClass]="{modalOpen: 'modal-open'}">
+<div id="main">
 	<current-munincipality></current-munincipality>
 	<map></map>
+	<app-info [style.visibility]="modalOpen ? 'visible' : 'hidden'"></app-info>
 </div>
