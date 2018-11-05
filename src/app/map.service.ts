@@ -10,6 +10,8 @@ export class MapService {
 
   private _location = new BehaviorSubject<L.LatLng>(undefined);
   public location: Observable<L.LatLng> = this._location.asObservable();
+  private _mapInit = new BehaviorSubject<boolean>(false);
+  public mapInit: Observable<boolean> = this._mapInit.asObservable();
 
   private marker: L.Marker;
 
@@ -21,6 +23,11 @@ export class MapService {
   constructor(private http: HttpClient) {
     this.initBaseMaps();
     L.Marker.prototype.options.icon = this.DefaultIcon;
+  }
+
+  setMap(map: L.Map) {
+    this.map = map;
+    this._mapInit.next(true);
   }
 
   disableMouseEvent(elementId: string) {

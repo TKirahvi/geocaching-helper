@@ -25,8 +25,11 @@ export class MapComponent implements AfterViewInit {
     });
 
     L.control.zoom({ position: "topright" }).addTo(map);
+    L.control
+      .layers(this.mapService.baseMaps, null, { position: "topleft" })
+      .addTo(map);
     L.control.scale().addTo(map);
-    this.mapService.map = map;
+    this.mapService.setMap(map);
 
     this.mapService.refreshLocation();
   }

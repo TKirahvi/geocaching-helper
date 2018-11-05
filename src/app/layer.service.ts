@@ -31,19 +31,15 @@ export class LayerService {
     private mapService: MapService,
     private windowService: WindowService
   ) {
-    this.initLayers();
-    //this.layers[LayerType.Munincipalities].addTo(this.mapService.map);
-  }
-
-  setLayer(layer: LayerSelection): any {
-    var selectedLayer = this.layers[layer.type];
-    selectedLayer.addTo(this.mapService.map);
+    this.mapService.mapInit.filter(initialized => initialized).subscribe(() => {
+      this.initLayers();
+    });
   }
 
   initLayers(): any {
     this.windowService.startLoading();
 
-    this.graticule = latlngGraticule({
+    this.layers[LayerType.Graticules] = latlngGraticule({
       showLabel: true,
       color: "red",
       weight: 0.8,
@@ -54,16 +50,24 @@ export class LayerService {
       ]
     });
 
-    this.munincipalities = this.http
-      .get(this.allMunincipalities)
-      .subscribe(result => {
-        this.layers[LayerType.Munincipalities] = L.vectorGrid.slicer(result, {
+    this.http.get(this.allMunincipalities).subscribe(result => {
+      this.layers[LayerType.Munincipalities] = L.geoJSON(
+        result as any
+      ); /*L.vectorGrid.slicer(result, {
           zIndex: 1000
-        });
-      });
-    this.graticule.addTo(this.mapService.map);
+        });*/
+    });
 
     this.windowService.endLoading();
+  }
+
+  toggleLayer(layer: LayerType) {
+    var selectedLayer = this.layers[layer];
+    if (this.mapService.map.hasLayer(selectedLayer)) {
+      this.mapService.map.removeLayer(selectedLayer);
+    } else {
+      selectedLayer.addTo(this.mapService.map);
+    }
   }
 
   findMunincipality(latLng: L.LatLng): Promise<string> {
@@ -77,15 +81,14 @@ export class LayerService {
           this.windowService.startLoading();
           let munincipalityGeoJSON: any = result;
 
-          for (var i = 0; i < munincipalityGeoJSON.features.length; i++) {
-            var feature = munincipalityGeoJSON.features[i];
+          munincipalityGeoJSON.features.map(feature => {
             if (
               (feature.geometry.geometries || feature.geometry.coordinates) &&
               d3.geoContains(feature.geometry, [latLng.lng, latLng.lat])
             ) {
               munincipality = feature.properties.name;
             }
-          }
+          });
           resolve(munincipality);
           this.windowService.endLoading();
         });

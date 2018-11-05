@@ -18,7 +18,6 @@ export class LayerSelectComponent implements OnInit {
   ngOnInit() {}
 
   onLayerChange(layer: LayerSelection) {
-    console.log(layer.name);
-    this.layerService.setLayer(layer);
+    this.layerService.toggleLayer(layer.type);
   }
 }
