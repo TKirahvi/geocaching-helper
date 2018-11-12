@@ -22,7 +22,6 @@ import "d3-geo";
 
 import { CurrentMunincipalityComponent } from "./current-munincipality/current-munincipality.component";
 import { InfoComponent } from "./info/info.component";
-import { ModalDialogModule } from "ngx-modal-dialog";
 
 @NgModule({
   declarations: [
@@ -41,8 +40,7 @@ import { ModalDialogModule } from "ngx-modal-dialog";
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    MatSnackBarModule,
-    ModalDialogModule.forRoot()
+    MatSnackBarModule
   ],
   entryComponents: [InfoComponent],
   providers: [MapService, ModalService],
