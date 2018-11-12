@@ -56,6 +56,7 @@ export class MapService {
   }
 
   refreshLocation() {
+    
     this.map
       .locate({
         setView: true,

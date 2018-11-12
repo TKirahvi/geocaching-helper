@@ -4,11 +4,22 @@
 }
 
 .map-navigator {
-  margin: 20px 0 0 20px;
-  width: 40px;
-  height: 35px;
+  margin: 10px 0 0 70px !important;
+  width: 44px;
+  height: 44px;
   background-color: white;
-  padding: 5px;
+  //padding: 5px;
+  border-radius: 5px;
+  border: 2px solid rgba(0,0,0,0.2);
+  box-shadow: none !important;
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+
+  .mat-icon-button {
+    min-width: 0;
+    width: 44px;
+    height: 44px;
+  }
 }
 
 

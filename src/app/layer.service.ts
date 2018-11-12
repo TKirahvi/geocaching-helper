@@ -18,11 +18,6 @@ interface LayerMap {
   providedIn: "root"
 })
 export class LayerService {
-  private layers: LayerMap = {};
-
-  private munincipalities: any;
-  private graticule: any;
-
   private allMunincipalities = "assets/kuntarajat.geojson";
   private strippedMunincipalities = "assets/kuntarajat-ok.geojson";
 
@@ -39,7 +34,7 @@ export class LayerService {
   initLayers(): any {
     this.windowService.startLoading();
 
-    this.layers[LayerType.Graticules] = latlngGraticule({
+    var graticuleLayer = latlngGraticule({
       showLabel: true,
       color: "red",
       weight: 0.8,
@@ -51,23 +46,15 @@ export class LayerService {
     });
 
     this.http.get(this.allMunincipalities).subscribe(result => {
-      this.layers[LayerType.Munincipalities] = L.geoJSON(
-        result as any
-      ); /*L.vectorGrid.slicer(result, {
-          zIndex: 1000
-        });*/
+      var munincipalityLayer = L.geoJSON( result as any );
+      var overlayMaps = {
+        "Graticule": graticuleLayer, 
+        "Kuntarajat": munincipalityLayer
+      }
+      L.control.layers(this.mapService.baseMaps, overlayMaps, { position: "topleft" }).addTo(this.mapService.map);
     });
 
     this.windowService.endLoading();
-  }
-
-  toggleLayer(layer: LayerType) {
-    var selectedLayer = this.layers[layer];
-    if (this.mapService.map.hasLayer(selectedLayer)) {
-      this.mapService.map.removeLayer(selectedLayer);
-    } else {
-      selectedLayer.addTo(this.mapService.map);
-    }
   }
 
   findMunincipality(latLng: L.LatLng): Promise<string> {

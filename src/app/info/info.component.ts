@@ -1,9 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  IModalDialog,
-  IModalDialogButton,
-  IModalDialogOptions
-} from "ngx-modal-dialog";
 import { ComponentRef } from "@angular/core";
 import { ModalService } from "../modal.service";
 

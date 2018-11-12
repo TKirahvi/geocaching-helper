@@ -22,8 +22,6 @@ import "d3-geo";
 
 import { CurrentMunincipalityComponent } from "./current-munincipality/current-munincipality.component";
 import { InfoComponent } from "./info/info.component";
-import { ModalDialogModule } from "ngx-modal-dialog";
-import { LayerSelectComponent } from "./layer-select/layer-select.component";
 
 @NgModule({
   declarations: [
@@ -31,8 +29,7 @@ import { LayerSelectComponent } from "./layer-select/layer-select.component";
     NavigatorComponent,
     AppComponent,
     CurrentMunincipalityComponent,
-    InfoComponent,
-    LayerSelectComponent
+    InfoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,8 +40,7 @@ import { LayerSelectComponent } from "./layer-select/layer-select.component";
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    MatSnackBarModule,
-    ModalDialogModule.forRoot()
+    MatSnackBarModule
   ],
   entryComponents: [InfoComponent],
   providers: [MapService, ModalService],
