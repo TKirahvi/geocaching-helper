@@ -1,15 +1,4 @@
 <div id="map-navigators">
-  <div class="map-navigator box-frame on-map element-row">
-    <button mat-icon-button
-            disableRipple
-            [class.inactive]="!munincipalityOn"
-            [class.active]="munincipalityOn"
-            matTooltip="Aseta kuntarajat päälle/pois"
-            (click)="toggleMunicipalityLayer(!munincipalityOn)">
-      <mat-icon>layers</mat-icon>
-    </button>
-  </div>
-
   <div class="map-navigator box-frame on-map element-row" style="margin: 20px 0 0 80px">
     <button mat-icon-button
         mapTooltip="Päivitä sijainti ja kunta"
