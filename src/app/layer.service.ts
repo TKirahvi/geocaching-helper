@@ -29,6 +29,24 @@ export class LayerService {
     this.mapService.mapInit.filter(initialized => initialized).subscribe(() => {
       this.initLayers();
     });
+    this.mapService.mapClick
+      .filter(click => click != undefined)
+      .subscribe(click => {
+        this.findMunincipality(click.latlng).then(munincipality => {
+          L.popup()
+            .setLatLng(click.latlng)
+            .setContent(
+              "<p><h2>" +
+                munincipality +
+                "</h2> (" +
+                click.latlng.lat.toFixed(4) +
+                ", " +
+                click.latlng.lng.toFixed(4) +
+                ")</p>"
+            )
+            .openOn(this.mapService.map);
+        });
+      });
   }
 
   initLayers(): any {
@@ -46,12 +64,14 @@ export class LayerService {
     });
 
     this.http.get(this.allMunincipalities).subscribe(result => {
-      var munincipalityLayer = L.geoJSON( result as any );
+      var munincipalityLayer = L.geoJSON(result as any);
       var overlayMaps = {
-        "Graticule": graticuleLayer, 
-        "Kuntarajat": munincipalityLayer
-      }
-      L.control.layers(this.mapService.baseMaps, overlayMaps, { position: "topleft" }).addTo(this.mapService.map);
+        Graticule: graticuleLayer,
+        Kuntarajat: munincipalityLayer
+      };
+      L.control
+        .layers(this.mapService.baseMaps, overlayMaps, { position: "topleft" })
+        .addTo(this.mapService.map);
     });
 
     this.windowService.endLoading();

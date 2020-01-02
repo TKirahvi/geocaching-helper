@@ -12,6 +12,10 @@ export class MapService {
   public location: Observable<L.LatLng> = this._location.asObservable();
   private _mapInit = new BehaviorSubject<boolean>(false);
   public mapInit: Observable<boolean> = this._mapInit.asObservable();
+  private _mapClick = new BehaviorSubject<L.LeafletMouseEvent>(undefined);
+  public mapClick: Observable<
+    L.LeafletMouseEvent
+  > = this._mapClick.asObservable();
 
   private marker: L.Marker;
 
@@ -56,7 +60,6 @@ export class MapService {
   }
 
   refreshLocation() {
-    
     this.map
       .locate({
         setView: true,
@@ -70,6 +73,11 @@ export class MapService {
         console.log(e);
         alert("Location access denied.");
       });
+
+    this.map.addEventListener("click", e => {
+      let mouseEvent = <L.LeafletMouseEvent>e;
+      this._mapClick.next(mouseEvent);
+    });
   }
 
   initBaseMaps(): any {
